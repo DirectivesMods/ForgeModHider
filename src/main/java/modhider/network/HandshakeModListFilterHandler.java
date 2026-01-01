@@ -9,6 +9,7 @@ import io.netty.channel.ChannelOutboundHandlerAdapter;
 import io.netty.channel.ChannelPromise;
 import io.netty.util.ReferenceCountUtil;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.network.play.client.C17PacketCustomPayload;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.util.ChatComponentText;
@@ -89,7 +90,17 @@ public class HandshakeModListFilterHandler extends ChannelOutboundHandlerAdapter
     }
 
     private boolean shouldFilter() {
-        return ConfigManager.instance.isFilterEnabled() && !Minecraft.getMinecraft().isSingleplayer();
+        if (!ConfigManager.instance.isFilterEnabled()) {
+            return false;
+        }
+
+        Minecraft minecraft = Minecraft.getMinecraft();
+        if (minecraft.isSingleplayer()) {
+            return false;
+        }
+
+        ServerData serverData = minecraft.getCurrentServerData();
+        return serverData == null || !serverData.isOnLAN();
     }
 
     private boolean filterModList(ByteBuf payload) {
