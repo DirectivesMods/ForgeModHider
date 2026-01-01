@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
-@Mod(modid = "modhider", name = "ForgeModHider", version = "1.2", guiFactory = "modhider.config.GuiFactory")
+@Mod(modid = "modhider", name = "ForgeModHider", version = "1.2.1", guiFactory = "modhider.config.GuiFactory")
 public class ForgeMod {
     @Mod.EventHandler
     public void onPreInit(FMLPreInitializationEvent event) {
